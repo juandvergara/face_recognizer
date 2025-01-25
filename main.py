@@ -10,7 +10,7 @@ def main():
 
 main()
 
-
+'''
 known_face_encodings = []
 known_face_names = []
 with open('known_faces.csv', 'r') as csvfile:
@@ -21,3 +21,4 @@ with open('known_faces.csv', 'r') as csvfile:
         encoding = np.array(eval(row[1]))
         known_face_names.append(name)
         known_face_encodings.append(encoding)
+'''
