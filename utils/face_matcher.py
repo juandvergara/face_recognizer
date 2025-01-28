@@ -9,8 +9,8 @@ class FaceMatcher:
         print('FaceMatcher initialized')
         self.directory = directory
         self.name_file_to_save = name_file_to_save
-        self.known_face_encodings = []
-        self.known_face_names = []
+        self._known_face_encodings = []
+        self._known_face_names = []
 
     def __load_known_faces(self):
         '''
@@ -29,19 +29,25 @@ class FaceMatcher:
                 for row in facereader:
                     name = row[0]
                     encoding = np.array(eval(row[1]))
-                    self.known_face_names.append(name)
-                    self.known_face_encodings.append(encoding)
+                    self._known_face_names.append(name)
+                    self._known_face_encodings.append(encoding)
         else:
             print('No faces saved')
     
-    def compare_faces(self, face_to_compare):
+    def compare_faces(self, face_to_compare, tolerance=0.4):
         '''
-        Register a new face into the data file, this method will open \\
-        a webcam and will capture the face of the person to register
+        Compare faces with database\\
 
-        :param total_frames: int # Number of frames to capture
-        :param name: str # Name of the person to register
+        :param face_to_compare: list # The image with face to compare
+        :param tolerance: float # Tolerance to compare faces
         '''
+        name = "Unkwown"
         self.__load_known_faces()
-        
+        comparisions = face_recognition.compare_faces(self._known_face_encodings, face_to_compare, tolerance)
+
+        if True in comparisions:
+                    first_match_index = comparisions.index(True)
+                    name = self._known_face_names[first_match_index]
+                    
+        return name
         # TODO: Implement the face comparison
