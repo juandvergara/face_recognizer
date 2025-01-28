@@ -57,7 +57,7 @@ class FaceRegister:
                 if self.name == '': self.name = input('Enter the name of the person: ')
                 print('Registering face...')
                 face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
-                self.__save_new_face(face_encodings[0], name)
+                self.__save_new_face(face_encodings[0], self.name)
                 counter_frames += 1
                 if counter_frames == self.total_frames: 
                     print('Face registered!')
